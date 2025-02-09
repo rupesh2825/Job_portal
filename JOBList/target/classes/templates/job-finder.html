@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Jobs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background: url('background.jpg') no-repeat center center/cover;
+            color: white;
+        }
+        h2 {
+            text-align: center;
+        }
+        .job-container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px gray;
+            color: black;
+        }
+        .job {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .job:last-child {
+            border-bottom: none;
+        }
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input {
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Find a Job</h2>
+
+<div class="job-container">
+    <div class="search-bar">
+        <input type="text" id="searchText" placeholder="Search by profile, description, or technology...">
+        <button onclick="searchJobs()">Search</button>
+    </div>
+    <div id="jobList">
+        <p>Loading jobs...</p>
+    </div>
+</div>
+
+<script>
+    const API_URL = "http://localhost:8080/job_posts";
+
+    // Fetch all jobs on page load
+    async function fetchJobs() {
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error("Failed to fetch jobs");
+
+            const jobs = await response.json();
+            displayJobs(jobs);
+        } catch (error) {
+            console.error("Error:", error);
+            document.getElementById("jobList").innerHTML = "<p>Error loading jobs.</p>";
+        }
+    }
+
+    // Search jobs based on user input
+    async function searchJobs() {
+        const searchText = document.getElementById("searchText").value;
+        if (searchText.trim() === "") {
+            fetchJobs();
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/search?text=${encodeURIComponent(searchText)}`);
+            if (!response.ok) throw new Error("Failed to search jobs");
+
+            const jobs = await response.json();
+            displayJobs(jobs);
+        } catch (error) {
+            console.error("Error:", error);
+            document.getElementById("jobList").innerHTML = "<p>No jobs found.</p>";
+        }
+    }
+
+    // Display jobs in the HTML
+    function displayJobs(jobs) {
+        const jobList = document.getElementById("jobList");
+        if (jobs.length === 0) {
+            jobList.innerHTML = "<p>No jobs available.</p>";
+            return;
+        }
+
+        jobList.innerHTML = jobs.map(job => `
+            <div class="job">
+                <h3>${job.profile}</h3>
+                <p><strong>Description:</strong> ${job.description}</p>
+                <p><strong>Experience:</strong> ${job.experience} years</p>
+                <p><strong>Technologies:</strong> ${job.techs}</p>
+            </div>
+        `).join("");
+    }
+
+    // Load jobs when the page loads
+    fetchJobs();
+</script>
+
+</body>
+</html>
