@@ -1,0 +1,22 @@
+-- Create the database
+CREATE DATABASE job_portal;
+
+-- Use the database
+USE job_portal;
+
+-- Create the job_posts table
+CREATE TABLE job_posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    profile VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    experience INT NOT NULL,
+    techs VARCHAR(255) NOT NULL
+);
+
+--insert the data
+INSERT INTO job_posts (profile, description, experience, techs) VALUES
+('Java Developer', 'Develop and maintain Java applications.', 2, 'Java, Spring Boot, Hibernate'),
+('Frontend Developer', 'Design and build modern UI components.', 1, 'HTML, CSS, JavaScript, React'),
+('Backend Engineer', 'Work on server-side logic and database management.', 3, 'Node.js, Express, MongoDB'),
+('Data Analyst', 'Analyze data and create reports for business insights.', 2, 'Python, SQL, Tableau'),
+('DevOps Engineer', 'Implement CI/CD pipelines and manage cloud infrastructure.', 4, 'AWS, Docker, Kubernetes');
