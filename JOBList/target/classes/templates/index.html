@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #333;
+        }
+        .menu-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .find-job {
+            background: #28a745;
+            color: white;
+        }
+        .add-job {
+            background: #007bff;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Job Portal
+</header>
+
+<main>
+    <h1>Welcome to Job Portal</h1>
+    <div class="menu-buttons">
+        <button class="find-job" onclick="window.location.href='job-finder.html'">Find Jobs</button>
+        <button class="add-job" onclick="window.location.href='job-adder.html'">Add Job</button>
+    </div>
+</main>
+
+<footer>
+    &copy; 2025 Job Portal. All rights reserved.
+</footer>
+
+</body>
+</html>
