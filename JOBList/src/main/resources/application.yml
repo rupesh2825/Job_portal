@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://JOBList:2005@cluster0.zlw9n.mongodb.net/JOB?retryWrites=true&w=majority
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    check-template-location: true
+server:
+  port: 8080

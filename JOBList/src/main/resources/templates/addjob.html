@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Job Post</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        footer {
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+<header class="bg-dark text-white p-3 text-center">
+    <h1>Job Listings Portal</h1>
+</header>
+
+<div class="container mt-5">
+    <h2 class="text-center">Add Job Post</h2>
+    <form id="createPostForm">
+        <input type="text" class="form-control mt-3" id="profile" placeholder="Profile" required>
+        <textarea class="form-control mt-3" id="description" placeholder="Description" required></textarea>
+        <input type="number" class="form-control mt-3" id="experience" placeholder="Experience (in years)" required>
+        <input type="text" class="form-control mt-3" id="techs" placeholder="Technologies (comma separated)" required>
+        <button type="submit" class="btn btn-primary mt-3">Create Post</button>
+    </form>
+
+    <div class="d-flex justify-content-between mt-4">
+        <a href="/" class="btn btn-secondary">Back to Home</a>
+        <a href="/findjob" class="btn btn-success">Find Jobs</a>
+    </div>
+</div>
+
+<footer class="bg-dark text-white text-center p-3">
+    <p>&copy; 2025 Job Listings Portal. All Rights Reserved.</p>
+</footer>
+
+<script>
+    document.getElementById('createPostForm').addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent form refresh
+
+        const jobPost = {
+            profile: document.getElementById('profile').value,
+            description: document.getElementById('description').value,
+            experience: document.getElementById('experience').value,
+            techs: document.getElementById('techs').value.split(',').map(tech => tech.trim())
+        };
+
+        fetch('/api/jobs', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jobPost)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                alert('Job post created successfully!');
+                document.getElementById('createPostForm').reset();
+            } else {
+                alert('Failed to create job post. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Something went wrong. Please try again later.');
+        });
+    });
+</script>
+
+</body>
+</html>
